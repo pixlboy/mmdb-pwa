@@ -1,20 +1,26 @@
 {
-  "name": "mmdb2",
+  "name": "mmdb-pwa",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "firebase": "^7.14.3",
+    "fuzzy-search": "^3.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-mdl": "^2.1.0",
     "react-scripts": "3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "resize": "node node-scripts/resize-img",
+    "create": "node node-scripts/create-db",
+    "upload": "node node-scripts/upload-db"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +36,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "jimp": "^0.10.3",
+    "node-sass": "^4.14.1"
   }
 }

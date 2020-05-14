@@ -1,0 +1,98 @@
+@import './font-awesome.css';
+
+*{
+  box-sizing: border-box;
+}
+body {
+  padding: 0;
+  margin: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: #151516;
+}
+
+ul{
+  padding:0;
+  margin: 16px;
+  list-style-type: none;
+  display: grid;
+  grid-gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr) );
+}
+
+ul li{
+  margin: 0;
+  padding:0;
+}
+
+/* .mdc-card__media{
+  transition: filter 100ms linear;
+}
+
+.mdc-card__media:hover{
+  filter: grayscale(0);
+} */
+
+.search-bar{
+  width: 100%;
+  padding: 15px 8px;
+  background: #151516;
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+.search-input{
+  width: 100%;
+  height: 35px;
+  border-radius: 30px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, .14);
+  border: 0;
+  padding: 9px 10px 6px 42px;
+  color: #919191;
+  outline: none;
+}
+.container{
+  background: rgba(255, 255, 255, .14);
+  position: relative;
+  top: 60px;
+  height: calc(100vh - 60px);
+  overflow-x: auto;
+}
+
+.icons{
+  position: absolute;
+  top: 23px;
+}
+.search-cam{
+  left: 20px
+}
+.search-icon{
+  right: 60px
+}
+.search-speech{
+  right: 20px;
+  cursor: pointer;
+}
+.search-clear{
+  right: 60px;
+  cursor: pointer;
+  border-right: 1px solid rgba(252, 252, 252, 0.4);
+  padding-right: 15px;
+}
+
+.text-center{
+  text-align: center;
+}
+.card-content{
+  padding:5px 10px
+}
+.material-icons{
+  font-size: inherit;
+}
+.status-default{
+  color: #c0c0c0;
+}
+.status-red{
+  color: #f60000;
+}
