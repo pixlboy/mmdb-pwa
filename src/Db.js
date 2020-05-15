@@ -1,30 +1,21 @@
+import firebase from './Firebase';
+import 'firebase/firestore';
 
-// const db = firebase.firestore();
+const Db = firebase.firestore();
 
-// // enable offline data
-// db.enablePersistence()
-//   .catch(function(err) {
-//     if (err.code === 'failed-precondition') {
-//       // probably multible tabs open at once
-//       console.log('persistance failed');
-//     } else if (err.code === 'unimplemented') {
-//       // lack of browser support for the feature
-//       console.log('persistance not available');
-//     }
-//   });
+// enable offline data
+Db.enablePersistence()
+.catch(function(err) {
+  if (err.code === 'failed-precondition') {
+    // probably multible tabs open at once
+    console.log('persistance failed');
+  } else if (err.code === 'unimplemented') {
+    // lack of browser support for the feature
+    console.log('persistance not available');
+  }
+});
 
-// // real-time listener
-// db.collection('movies').onSnapshot(snapshot => {
-//   snapshot.docChanges().forEach(change => {
-//     if(change.type === 'added'){
-//       updateCollection(change.doc.data());
-//       addDOMItem(change.doc.data());
-//     }
-//     if(change.type === 'removed'){
-// //      removeRecipe(change.doc.id);
-//     }
-//   });
-// });
+export default Db;
 
 // // add new recipe
 // // const form = document.querySelector('form');

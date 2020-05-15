@@ -1,0 +1,43 @@
+.container{
+    background: rgba(255, 255, 255, .14);
+    position: relative;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-x: auto;
+
+    .movie-list{
+        padding:0;
+        margin: 16px 0 16px 16px;
+        list-style-type: none;
+        display: grid;
+        grid-gap: 16px;
+        grid-template-columns: repeat(3, minmax(0, 1fr) );
+        width: calc(100% - 60px);
+    }
+
+    .card-content{
+        padding:5px 10px
+    }
+
+    .status-default{
+        fill: $silver;
+    }
+
+    .status-red{
+        fill: $red;
+    }
+
+    /* .mdc-card__media{
+        transition: filter 100ms linear;
+    }
+
+    .mdc-card__media:hover{
+        filter: grayscale(0);
+    } */
+
+    .hearts{
+        font-size: 12px;
+    }
+
+}
+  
