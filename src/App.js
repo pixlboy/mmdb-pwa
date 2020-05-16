@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
 import Searchbar from './Searchbar';
 import Movies from './Movies';
-import SpeechRecognition from './Speech';
 
 class App extends Component {
 
   constructor(){
     super();
     this.state = {};
-    SpeechRecognition();
   }
 
   render(){

@@ -3,22 +3,22 @@
   "name": "My Movie Database",
   "icons": [
     {
-      "src": "favicon.png",
+      "src": "./favicon.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "favicon.png",
+      "src": "./favicon.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "favicon.png",
+      "src": "./favicon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "start_url": "/index.html",
   "display": "standalone",
   "theme_color": "#151516",
   "background_color": "#151516",

@@ -1,5 +1,5 @@
-import firebase from './Firebase';
 import 'firebase/firestore';
+import firebase from './Firebase';
 
 const Db = firebase.firestore();
 

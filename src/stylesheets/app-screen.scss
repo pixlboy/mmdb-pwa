@@ -1,0 +1,18 @@
+/* Using SCSS variables to store breakpoints */
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+@media (min-width: $breakpoint-tablet) {
+    .container{
+        .movie-list{
+            grid-template-columns: repeat(3, minmax(0, 1fr) );
+        }
+    }
+}
+@media (min-width: $breakpoint-desktop) {
+    .container {
+        .movie-list{
+            grid-template-columns: repeat(4, minmax(0, 1fr) );
+        }
+    }
+}

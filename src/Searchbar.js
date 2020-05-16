@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 import { messageService } from './MessageService';
+import { getSpeechRecognition, readOutLoud } from './Speech';
 
 class Searchbar extends Component {
 
@@ -10,6 +11,7 @@ class Searchbar extends Component {
     this.searchRef = React.createRef();
     this.deleteSearchRef = React.createRef();
     this.speakInputRef = React.createRef();
+    this.recognition = getSpeechRecognition();
   }
 
   render(){
@@ -39,14 +41,17 @@ class Searchbar extends Component {
   }
 
   componentDidMount(event){
-    const searchKeyup$ = fromEvent(this.searchRef, 'keyup');
+    const searchKeyup$ = fromEvent(this.searchRef, 'keyup', false);
     const deleteSearch$ = fromEvent(this.deleteSearchRef, 'click');
-    const speakInput$ = fromEvent(this.speakInputRef, 'click');
+    const speakClick$ = fromEvent(this.speakInputRef, 'click');
+    const speakOutput$ = fromEvent(this.recognition, 'result');
 
     // wait 5.s between keyups to emit current value
     searchKeyup$
     .pipe(
-      map((event) => event.currentTarget.value),
+      map((event) => {
+        return event.currentTarget.value
+      }),
       debounceTime(500)
     )
     .subscribe((data) => 
@@ -54,14 +59,28 @@ class Searchbar extends Component {
     );
     
     deleteSearch$
-    .subscribe(() => 
-      messageService.send(null)
+    .subscribe(() => {
+        this.searchRef.value = '';
+        messageService.send('');
+      }
     );
 
-    speakInput$
+    speakClick$
     .subscribe(() => 
-      messageService.invokeSpeech(null)
+      this.recognition.start()
     );
+
+    // This block is called every time the Speech API captures a line.
+    speakOutput$
+    .subscribe((event) => {
+        const current = event.resultIndex;
+        // Get a transcript of what was said.
+        const transcript = event.results[current][0].transcript;
+        readOutLoud(transcript);
+        this.searchRef.value = transcript;      // set the transcript in search bar
+        messageService.send(transcript);
+    });
+
   }
 
 }

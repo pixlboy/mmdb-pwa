@@ -11,12 +11,15 @@
         list-style-type: none;
         display: grid;
         grid-gap: 16px;
-        grid-template-columns: repeat(3, minmax(0, 1fr) );
+        grid-template-columns: repeat(2, minmax(0, 1fr) );
         width: calc(100% - 60px);
     }
 
     .card-content{
-        padding:5px 10px
+        padding: 5px 10px;
+        display: flex;
+        height: 100%;
+        align-items: center;
     }
 
     .status-default{
@@ -27,16 +30,25 @@
         fill: $red;
     }
 
-    /* .mdc-card__media{
-        transition: filter 100ms linear;
+    .mdc-card{
+        overflow: auto;
     }
 
-    .mdc-card__media:hover{
+    /* .mdc-card__media:hover{
         filter: grayscale(0);
     } */
 
-    .hearts{
-        font-size: 12px;
+    .card-rating{
+        font-size: 20px;
+        width: 50px;
+        text-align: right;
+    }
+
+    .card-text{
+        align-items: center;
+        display: flex;
+        width: calc(100% - 50px);
+        padding-right:10px;
     }
 
 }

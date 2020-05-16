@@ -7,9 +7,18 @@ body {
     margin: 0;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     background: $woodsmoke;
+    --mdc-typography-subtitle2-font-weight: 700;
 }
 
 li{
     margin: 0;
     padding: 0;
+}
+
+.float-right{
+    float: right;
+}
+
+.float-left{
+    float: left
 }
