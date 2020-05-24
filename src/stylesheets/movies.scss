@@ -1,8 +1,9 @@
 .container{
     background: rgba(255, 255, 255, .14);
     position: relative;
-    top: 60px;
-    height: calc(100vh - 60px);
+    top: 65px;
+    height: calc(100vh - 65px);
+    padding-top: 16px;
     overflow-x: auto;
 
     .movie-list{
@@ -11,8 +12,8 @@
         list-style-type: none;
         display: grid;
         grid-gap: 16px;
-        grid-template-columns: repeat(2, minmax(0, 1fr) );
-        width: calc(100% - 60px);
+        grid-template-columns: repeat(3, minmax(0, 1fr) );
+        width: calc(100% - 35px);
     }
 
     .card-content{
@@ -49,6 +50,19 @@
         display: flex;
         width: calc(100% - 50px);
         padding-right:10px;
+    }
+
+    .category-head{
+        color: $trinidad;
+        margin:0;
+        padding: 5px 15px;
+        background: #000000c2;
+        box-shadow: 1px 1px 1px 0px $black;
+        font-weight: 700;
+        width: 100px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        text-align: right;
     }
 
 }

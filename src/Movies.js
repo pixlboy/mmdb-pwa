@@ -13,12 +13,38 @@ class Movies extends Component {
       movies: []
     };
     this.imgBasePath = 'https://mmdb-store.s3.ap-south-1.amazonaws.com/thumbs/';
+    this.categories = [];
   }
 
   async getAllMovies() {
     const collection = Db.collection('movies');
     const snapshot = await collection.get();
-    return snapshot.docs.map(doc => doc.data());
+    return snapshot.docs.map(doc => {
+      const item = this.addCategory(doc.data());
+      return item;
+    });
+  }
+
+  addCategory(item){
+    let category = '';
+    if(item.name.charAt(0).match(/[a-z]/gi)){
+      category = item.name.charAt(0);
+      this.buildUniqueCategories(category);
+    } else{
+      category = 'Others';
+    }
+    item['category'] = category;
+    return item;
+  }
+
+  buildUniqueCategories(category){
+    if(this.categories.indexOf(category) === -1){
+      this.categories.push(category);
+    }
+  }
+
+  correctCategoryOrder(){
+    this.categories.sort().push('Others');
   }
 
   componentDidMount(){
@@ -30,6 +56,7 @@ class Movies extends Component {
     });
 
     this.getAllMovies().then((movies) => {
+        this.correctCategoryOrder();
         this.setState({
           movies: movies,
           initialStore: movies
@@ -39,34 +66,46 @@ class Movies extends Component {
   }
 
   render(){
+   
+    const getMoviesInCategory = (category) => {
+      return this.state.movies
+        .filter(item => item.category === category)
+        .map((item, idx) =>
+          <li key={idx} className="mdc-card">
+          <div 
+              className="mdc-card__media" 
+              tabIndex="0"
+              >
+              <img src={`${this.imgBasePath}${item.path}`} 
+                loading="lazy" 
+                alt={item.name}
+                height="auto"
+                width="100%" />
+          </div>
+          <div className="card-content">
+              <div className="mdc-typography mdc-typography--subtitle2 float-left card-text">
+                {item.name} ({item.year})
+              </div>
+              <div className="mdc-typography mdc-typography--subtitle2 float-right card-rating"
+                dangerouslySetInnerHTML={{ __html: this.getLike(item.rating) }}>
+              </div>
+          </div>
+        </li>
+        )
+    };
 
-    const listItems = this.state.movies.map((item, idx) =>
-      <li key={idx} className="mdc-card">
-        <div 
-            className="mdc-card__media" 
-            tabIndex="0"
-            >
-            <img src={`${this.imgBasePath}${item.path}`} 
-              loading="lazy" 
-              alt={item.name}
-              height="auto"
-              width="100%" />
+    const categories = this.categories
+      .map((item) =>
+        <div key={item}>
+          <h3 className="mdc-typography mdc-typography--headline6 category-head">{item}</h3>
+          <ul className="movie-list">
+            {getMoviesInCategory(item)}
+          </ul>
         </div>
-        <div className="card-content">
-            <div className="mdc-typography mdc-typography--subtitle2 float-left card-text">
-              {item.name} ({item.year})
-            </div>
-            <div className="mdc-typography mdc-typography--subtitle2 float-right card-rating"
-              dangerouslySetInnerHTML={{ __html: this.getLike(item.rating) }}>
-            </div>
-        </div>
-      </li>
     );
 
     return (
-      <ul className="movie-list" id='listContainer'>
-        {listItems}
-      </ul>
+      categories
     );
   }
 
