@@ -1,0 +1,8 @@
+.container{
+    background: rgba(255, 255, 255, .14);
+    position: relative;
+    top: 65px;
+    height: calc(100vh - 65px);
+    padding-top: 10px;
+    overflow-x: auto;
+}

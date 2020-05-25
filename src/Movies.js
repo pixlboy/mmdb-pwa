@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import "@material/card/dist/mdc.card.min.css";
 import '@material/typography/dist/mdc.typography.min.css';
 import Db from './Db';
 import { subscriber } from './MessageService';
 import FuzzySearch from 'fuzzy-search';
+import Scroller from './Scroller';
 
 class Movies extends Component {
 
@@ -31,7 +32,7 @@ class Movies extends Component {
       category = item.name.charAt(0);
       this.buildUniqueCategories(category);
     } else{
-      category = 'Others';
+      category = '#';
     }
     item['category'] = category;
     return item;
@@ -44,7 +45,7 @@ class Movies extends Component {
   }
 
   correctCategoryOrder(){
-    this.categories.sort().push('Others');
+    this.categories.sort().push('#');
   }
 
   componentDidMount(){
@@ -83,29 +84,41 @@ class Movies extends Component {
                 width="100%" />
           </div>
           <div className="card-content">
-              <div className="mdc-typography mdc-typography--subtitle2 float-left card-text">
-                {item.name} ({item.year})
-              </div>
-              <div className="mdc-typography mdc-typography--subtitle2 float-right card-rating"
-                dangerouslySetInnerHTML={{ __html: this.getLike(item.rating) }}>
-              </div>
+              <span className="mdc-typography mdc-typography--caption name">
+                {item.name}
+              </span>
+              <span className="mdc-typography mdc-typography--caption">
+                <span className="year">({item.year})</span>
+                <span className="rating"
+                  dangerouslySetInnerHTML={{ __html: this.getLike(item.rating) }}>
+                </span>
+              </span>
           </div>
         </li>
         )
     };
 
     const categories = this.categories
-      .map((item) =>
-        <div key={item}>
-          <h3 className="mdc-typography mdc-typography--headline6 category-head">{item}</h3>
-          <ul className="movie-list">
-            {getMoviesInCategory(item)}
-          </ul>
-        </div>
+      .map((item) => {
+        const moviesList = getMoviesInCategory(item);
+        const list = moviesList.length ? 
+          <div key={item} id={`movies-${item}`}>
+            <h3 className="mdc-typography mdc-typography--headline6 category-head">{item}</h3>
+            <ul className="movie-list">
+              {moviesList}
+            </ul>
+          </div> : null;
+          return list;
+      }
     );
 
     return (
-      categories
+      <Fragment>
+        <div className="movie-wrapper">
+          {categories}
+        </div>
+        <Scroller scrollList={this.categories} />
+      </Fragment>
     );
   }
 

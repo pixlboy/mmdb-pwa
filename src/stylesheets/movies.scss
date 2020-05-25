@@ -1,69 +1,61 @@
-.container{
-    background: rgba(255, 255, 255, .14);
-    position: relative;
-    top: 65px;
-    height: calc(100vh - 65px);
-    padding-top: 16px;
-    overflow-x: auto;
+.movie-wrapper{
+    width: calc(100vw - 46px);
+    float:left
+}
+.movie-list{
+    padding: 0 0 0 10px;
+    list-style-type: none;
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr) );
+    width: 100%
+}
 
-    .movie-list{
-        padding:0;
-        margin: 16px 0 16px 16px;
-        list-style-type: none;
-        display: grid;
-        grid-gap: 16px;
-        grid-template-columns: repeat(3, minmax(0, 1fr) );
-        width: calc(100% - 35px);
-    }
-
-    .card-content{
-        padding: 5px 10px;
-        display: flex;
-        height: 100%;
-        align-items: center;
-    }
-
-    .status-default{
-        fill: $silver;
-    }
-
-    .status-red{
-        fill: $red;
-    }
-
-    .mdc-card{
-        overflow: auto;
-    }
-
-    /* .mdc-card__media:hover{
-        filter: grayscale(0);
-    } */
-
-    .card-rating{
-        font-size: 20px;
-        width: 50px;
-        text-align: right;
-    }
-
-    .card-text{
-        align-items: center;
-        display: flex;
-        width: calc(100% - 50px);
-        padding-right:10px;
-    }
-
-    .category-head{
-        color: $trinidad;
-        margin:0;
-        padding: 5px 15px;
-        background: #000000c2;
-        box-shadow: 1px 1px 1px 0px $black;
+.card-content{
+    padding: 5px 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-weight: 700;
+    font-size: 12px;
+    .rating{
+        float: right;
         font-weight: 700;
-        width: 100px;
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-        text-align: right;
     }
+    .year{
+        float: left;
+        font-weight: 700;
+    }
+    .name{
+        font-weight: 700;
+        display: block;
+        margin-bottom: 2px;
+        flex:1;
+    }
+}
 
+.status-default{
+    fill: $silver;
+}
+
+.status-red{
+    fill: $red;
+}
+
+.mdc-card{
+    overflow: auto;
+}
+
+.category-head{
+    color: $trinidad;
+    margin:0;
+    padding: 3px 15px;
+    background: #000000c2;
+    box-shadow: 1px 1px 1px 0px $black;
+    font-weight: 700;
+    width: 100px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    text-align: right;
 }
   

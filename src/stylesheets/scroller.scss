@@ -1,0 +1,26 @@
+.scroll-wrapper{
+    width: 30px;
+    padding: 7px;
+    margin: 0 8px 5px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 80px);
+    position: fixed;
+    right: 0;
+    background: #000000c2;
+    border-radius: 24px;
+    align-items: center;
+    li{
+        flex:1;
+        align-items: center;
+        display: flex;
+        color: #a93200;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        &:hover{
+            color:$trinidad;
+            font-size: 20px;
+        }
+    }
+}
