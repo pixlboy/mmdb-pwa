@@ -1,17 +1,17 @@
 import React, {Component, Fragment} from 'react';
-import "@material/card/dist/mdc.card.min.css";
-import '@material/typography/dist/mdc.typography.min.css';
 import Db from './Db';
 import { subscriber } from './MessageService';
-import FuzzySearch from 'fuzzy-search';
 import Scroller from './Scroller';
+import classNames from 'classnames';
+import Fuse from 'fuse.js';
 
 class Movies extends Component {
 
   constructor(){
     super();
     this.state = {
-      movies: []
+      movies: [],
+      isLoader: true
     };
     this.imgBasePath = 'https://mmdb-store.s3.ap-south-1.amazonaws.com/thumbs/';
     this.categories = [];
@@ -50,24 +50,36 @@ class Movies extends Component {
 
   componentDidMount(){
 
-    subscriber.subscribe(query => {
-      this.setState({
-        movies: this.getSearchResults(query)
-      })
+    subscriber.subscribe(msg => {
+      if(msg.type === 'rate'){
+        this.setState({
+          movies: this.filterByRating(msg.query),
+        })
+      } else{
+        this.setState({
+          movies: this.getSearchResults(msg.query),
+        })
+      }
     });
 
     this.getAllMovies().then((movies) => {
         this.correctCategoryOrder();
         this.setState({
           movies: movies,
-          initialStore: movies
+          initialStore: movies,
+          isLoader: false
         })
       }
     );
+
   }
 
   render(){
-   
+ 
+    const loaderClass = classNames(
+      'mdc-linear-progress',
+      'mdc-linear-progress--indeterminate',
+      {'mdc-linear-progress--closed' : !this.state.isLoader});
     const getMoviesInCategory = (category) => {
       return this.state.movies
         .filter(item => item.category === category)
@@ -80,8 +92,8 @@ class Movies extends Component {
               <img src={`${this.imgBasePath}${item.path}`} 
                 loading="lazy" 
                 alt={item.name}
-                height="auto"
-                width="100%" />
+                style={{'height': "auto", 'width': '100%'}}
+              />
           </div>
           <div className="card-content">
               <span className="mdc-typography mdc-typography--caption name">
@@ -103,7 +115,7 @@ class Movies extends Component {
         const moviesList = getMoviesInCategory(item);
         const list = moviesList.length ? 
           <div key={item} id={`movies-${item}`}>
-            <h3 className="mdc-typography mdc-typography--headline6 category-head">{item}</h3>
+            {/* <h3 className="mdc-typography mdc-typography--subtitle2 category-head">{item}</h3> */}
             <ul className="movie-list">
               {moviesList}
             </ul>
@@ -115,6 +127,24 @@ class Movies extends Component {
     return (
       <Fragment>
         <div className="movie-wrapper">
+          <div className="loader">
+            <div role="progressbar" className={loaderClass} aria-label="Progress Bar" 
+              aria-valuemin="0" aria-valuemax="1">
+              <div className="mdc-linear-progress__buffer">
+                <div className="mdc-linear-progress__buffer-bar"></div>
+                <div className="mdc-linear-progress__buffer-dots"></div>
+              </div>
+              <div className="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+                <span className="mdc-linear-progress__bar-inner"></span>
+              </div>
+              <div className="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+                <span className="mdc-linear-progress__bar-inner"></span>
+              </div>
+            </div>
+          </div>
+          <h6 className="mdc-typography mdc-typography--overline list-length">
+            Showing {this.state.movies.length} results
+          </h6>
           {categories}
         </div>
         <Scroller scrollList={this.categories} />
@@ -132,14 +162,31 @@ class Movies extends Component {
   }
 
   getSearchResults(val){
-    const searcher = new FuzzySearch(
-        this.state.initialStore,
-        ['name', 'year'], {
-            caseSensitive: false
+    if(val){
+      const options = {
+        keys: ['name', 'year'],
+        useExtendedSearch: true,
+        findAllMatches: true
+      }
+      const fuse = new Fuse(this.state.initialStore, options)
+      const search = fuse.search(`'${val}`);
+  
+      return search.flatMap((obj) => {
+        return obj.item;
+      });  
+    }
+    return this.state.initialStore;
+  }
+
+  filterByRating(val){
+    if(val.length){
+      return this.state.initialStore.filter((item) => {
+        if(item.rating >= val[0] && item.rating <= val[1]){
+          return item;
         }
-    );
-    //store matched items
-    return searcher.search(val);
+      });  
+    }
+    return this.state.initialStore;
   }
 
 }

@@ -1,0 +1,26 @@
+.footer{
+    width: 100%;
+    padding: 8px;
+    background: $woodsmoke;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    text-align: center;
+    box-shadow: $app-box-shadow;
+    z-index:100;
+    .icons{
+        flex: 1;
+        cursor: pointer;
+        svg{
+            font-size: 1.3rem;
+        }
+        &.faded{
+            filter: grayscale(1);
+        }
+    }
+    .icon-text{
+        color: $trinidad;
+        font-weight: 700;
+        font-size: 18px;
+    }
+}

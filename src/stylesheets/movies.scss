@@ -1,14 +1,22 @@
+.container{
+    background: rgba(255, 255, 255, .14);
+    position: relative;
+    top: 65px;
+    height: calc(100vh - 100px);
+    overflow-x: auto;
+}
 .movie-wrapper{
-    width: calc(100vw - 46px);
-    float:left
+    width: calc(100vw - 40px);
+    float:left;
 }
 .movie-list{
     padding: 0 0 0 10px;
     list-style-type: none;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(3, minmax(0, 1fr) );
-    width: 100%
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    margin: 5px 0 25px 0;
 }
 
 .card-content{
@@ -53,9 +61,17 @@
     background: #000000c2;
     box-shadow: 1px 1px 1px 0px $black;
     font-weight: 700;
-    width: 100px;
+    width: 80px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     text-align: right;
 }
   
+.list-length{
+    color: $white;
+    margin: 0 0 0 12px;
+    display: inline-block;
+}
+.loader{
+    width: calc(100% + 20px);
+}

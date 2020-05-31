@@ -5,6 +5,7 @@
     position: fixed;
     top: 0;
     z-index: 100;
+    box-shadow: $app-box-shadow;
 
     .search-input{
         width: 100%;

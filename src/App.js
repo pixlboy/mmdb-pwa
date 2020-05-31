@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Searchbar from './Searchbar';
 import Movies from './Movies';
+import Footer from './Footer';
 
 class App extends Component {
 
@@ -16,6 +17,7 @@ class App extends Component {
         <div id='container' className='container'>
           <Movies />
         </div>
+        <Footer />
       </div>
     );
   }

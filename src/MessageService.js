@@ -3,8 +3,8 @@ import {Subject} from 'rxjs';
 const subscriber = new Subject();
 
 const messageService = {
-    send: (msg) => {
-        subscriber.next(msg)
+    send: (query, type = 'search') => {
+        subscriber.next({query, type});
     }
 }
 

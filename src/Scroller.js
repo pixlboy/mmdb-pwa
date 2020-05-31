@@ -11,13 +11,11 @@ class Scroller extends Component {
   }
 
   componentDidMount(){
-  }
-
-  componentWillReceiveProps(){
     this.setState({
-        scrollList : this.props.scrollList
+      scrollList : this.props.scrollList
     });
   }
+
 
   scollInto(evt){
     const target = evt.target.innerHTML;
