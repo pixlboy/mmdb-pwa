@@ -33,6 +33,6 @@ function compressFile(file){
         image
         .resize(IMG_WIDTH, IMG_HEIGHT) // resize
         .quality(IMG_QUALITY) // set JPEG quality
-        .write(`./thumbs/${file}`); // save
+        .write(path.join(__dirname, `/thumbs/${file}`)); // save
     });
 }

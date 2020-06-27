@@ -2,7 +2,6 @@
 const path = require('path');
 const fs = require('fs');
 const parser = require('exif-parser');
-const async = require('async');
 
 //joining path of directory 
 const directoryPath = path.join(__dirname, 'movies');
@@ -45,14 +44,14 @@ fs.readdir(directoryPath, function (err, files) {
 function createFileObject(file, metadata){
     const buffer = parser.create(metadata);
     const result = buffer.parse();
+    const splitFile = file.split(' (');
     // Do whatever you want to do with the file
-    const movieItem = {
+    return {
         path : file,
-        name : file.substr(0, file.length -  11),
-        year : file.substr(file.length -  9, 4),
+        name : splitFile[0],
+        year : Number(splitFile[1].substr(0,4)),
         rating : result.tags.Rating * 2
     }
-    return movieItem;
 }
 
 function createJSON(data){
