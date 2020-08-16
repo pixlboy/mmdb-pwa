@@ -3,7 +3,7 @@ const fs = require('fs');
 const jimp = require('jimp');
 const directoryPath = path.join(__dirname, 'movies');
 const IMG_WIDTH = 80;
-const IMG_HEIGHT = 130;
+const IMG_HEIGHT = jimp.AUTO;
 const IMG_QUALITY = 100;
 
 fs.readdir(directoryPath, function (err, files) {
