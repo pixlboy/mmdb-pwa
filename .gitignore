@@ -25,4 +25,4 @@ yarn-error.log*
 /node-scripts/movies/
 /node-scripts/thumbs/
 .firebase
-Firebase.js
+.env
