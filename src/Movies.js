@@ -69,8 +69,8 @@ class Movies extends Component {
     });
 
     this.getAllMovies().then((movies) => {
-        this.correctCategoryOrder();
         Promise.all(movies).then((values) => {
+          this.correctCategoryOrder();
           this.setState({
             movies: values,
             initialStore: values,
