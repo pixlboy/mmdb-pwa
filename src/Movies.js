@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import Db from './Db';
+import {firestore, storage} from './firebase/connect';
 import { subscriber } from './MessageService';
 import Scroller from './Scroller';
 import classNames from 'classnames';
@@ -13,15 +13,21 @@ class Movies extends Component {
       movies: [],
       isLoader: true
     };
-    this.imgBasePath = 'https://mmdb-store.s3.ap-south-1.amazonaws.com/thumbs/';
     this.categories = [];
   }
 
+  getImgPath(name) {
+    const ref = storage.ref(`/thumbs/${name}`);
+    return ref.getDownloadURL();
+  }
+
   async getAllMovies() {
-    const collection = Db.collection('movies');
+    const collection = firestore.collection('movies');
     const snapshot = await collection.get();
-    return snapshot.docs.map(doc => {
+    return snapshot.docs.map(async (doc) => {
+      const url = await this.getImgPath(doc.data().path);
       const item = this.addCategory(doc.data());
+      item.storagePath = url;
       return item;
     });
   }
@@ -64,11 +70,13 @@ class Movies extends Component {
 
     this.getAllMovies().then((movies) => {
         this.correctCategoryOrder();
-        this.setState({
-          movies: movies,
-          initialStore: movies,
-          isLoader: false
-        })
+        Promise.all(movies).then((values) => {
+          this.setState({
+            movies: values,
+            initialStore: values,
+            isLoader: false
+          })   
+        });
       }
     );
 
@@ -83,13 +91,13 @@ class Movies extends Component {
     const getMoviesInCategory = (category) => {
       return this.state.movies
         .filter(item => item.category === category)
-        .map((item, idx) =>
-          <li key={idx} className="mdc-card">
+        .map((item, idx) => {
+          return <li key={idx} className="mdc-card">
           <div 
               className="mdc-card__media" 
               tabIndex="0"
               >
-              <img src={`${this.imgBasePath}${item.path}`} 
+              <img src={item.storagePath} 
                 loading="lazy" 
                 alt={item.name}
                 style={{'height': "auto", 'width': '100%'}}
@@ -107,7 +115,7 @@ class Movies extends Component {
               </span>
           </div>
         </li>
-        )
+        })
     };
 
     const categories = this.categories

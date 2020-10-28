@@ -1,11 +1,11 @@
-import 'firebase/firestore';
-import firebase from './Firebase';
+import firebase from './config';
 
-const Db = firebase.firestore();
+const firestore = firebase.firestore();
+const storage = firebase.storage();
 
 // enable offline data
-Db.enablePersistence()
-.catch(function(err) {
+firestore.enablePersistence()
+.catch((err) => {
   if (err.code === 'failed-precondition') {
     // probably multible tabs open at once
     console.log('persistance failed');
@@ -15,4 +15,4 @@ Db.enablePersistence()
   }
 });
 
-export default Db;
+export {firestore, storage};
