@@ -14,32 +14,9 @@
     list-style-type: none;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     width: 100%;
     margin: 5px 0 25px 0;
-}
-
-.card-content{
-    padding: 5px 10px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    font-weight: 700;
-    font-size: 12px;
-    .rating{
-        float: right;
-        font-weight: 700;
-    }
-    .year{
-        float: left;
-        font-weight: 700;
-    }
-    .name{
-        font-weight: 700;
-        display: block;
-        margin-bottom: 2px;
-        flex:1;
-    }
 }
 
 .status-default{
@@ -51,7 +28,38 @@
 }
 
 .mdc-card{
-    overflow: auto;
+    height: 100px;
+    display: block!important;
+    overflow: hidden;
+    .mdc-card__media{
+        float: left;
+        height: 100%;
+        width: 80px;
+    }
+    .card-content{
+        float: left;
+        padding: 5px 10px;
+        width: calc(100% - 80px);
+        font-weight: 700;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .rating{
+            float: right;
+            font-weight: 700;
+        }
+        .year{
+            float: left;
+            font-weight: 700;
+        }
+        .name{
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+            flex: 1;
+        }
+    }    
 }
 
 .category-head{

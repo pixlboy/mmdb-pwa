@@ -7,7 +7,7 @@ class Scroller extends Component {
     this.state = {
         scrollList : []
     };
-    this.scollInto = this.scollInto.bind(this);
+    this.scrollInto = this.scrollInto.bind(this);
   }
 
   componentDidMount(){
@@ -17,7 +17,7 @@ class Scroller extends Component {
   }
 
 
-  scollInto(evt){
+  scrollInto(evt){
     const target = evt.target.innerHTML;
     const elem = document.getElementById(`movies-${target}`);
     if(elem){
@@ -31,7 +31,7 @@ class Scroller extends Component {
       <ul className="scroll-wrapper">
         {this.state.scrollList
             .map((item, idx) =>
-              <li key={item} onClick={(evt) => this.scollInto(evt)}>{item}</li>
+              <li key={item} onClick={(evt) => this.scrollInto(evt)}>{item}</li>
             )
         }
       </ul>

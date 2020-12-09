@@ -1,4 +1,6 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/storage';     // for storage
+import 'firebase/firestore';   // for cloud firestore
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

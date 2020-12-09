@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const jimp = require('jimp');
-const directoryPath = path.join(__dirname, 'movies');
+const directoryPath = path.join(__dirname, 'new');
 const IMG_WIDTH = 80;
 const IMG_HEIGHT = jimp.AUTO;
 const IMG_QUALITY = 100;
@@ -33,6 +33,6 @@ function compressFile(file){
         image
         .resize(IMG_WIDTH, IMG_HEIGHT) // resize
         .quality(IMG_QUALITY) // set JPEG quality
-        .write(path.join(__dirname, `/thumbs/${file}`)); // save
+        .write(path.join(__dirname, `/new-thumbs/${file}`)); // save
     });
 }

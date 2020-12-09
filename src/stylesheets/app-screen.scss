@@ -1,18 +1,26 @@
 /* Using SCSS variables to store breakpoints */
-$breakpoint-tablet: 768px;
-$breakpoint-desktop: 1024px;
+$breakpoint-sm: 480px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
 
-@media (min-width: $breakpoint-tablet) {
+@media (min-width: $breakpoint-sm) {
     .container{
         .movie-list{
-            grid-template-columns: repeat(4, minmax(0, 1fr) );
+            grid-template-columns: repeat(2, minmax(0, 1fr) );
         }
     }
 }
-@media (min-width: $breakpoint-desktop) {
+@media (min-width: $breakpoint-md) {
+    .container{
+        .movie-list{
+            grid-template-columns: repeat(3, minmax(0, 1fr) );
+        }
+    }
+}
+@media (min-width: $breakpoint-lg) {
     .container {
         .movie-list{
-            grid-template-columns: repeat(5, minmax(0, 1fr) );
+            grid-template-columns: repeat(4, minmax(0, 1fr) );
         }
     }
 }
