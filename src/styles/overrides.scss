@@ -1,0 +1,7 @@
+.mdc-linear-progress{
+    .mdc-linear-progress__bar-inner {
+        border-color: var(--color-trinidad);
+        /* @alternate */
+        border-color: var(--mdc-theme-primary, var(--color-trinidad));
+    }
+}

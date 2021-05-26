@@ -1,9 +1,12 @@
-import React, {Component, Fragment} from 'react';
-import {firestore, storage} from './firebase/connect';
-import { subscriber } from './MessageService';
-import Scroller from './Scroller';
+import React, {Component} from 'react';
+import {firestore, storage} from '../../firebase/connect';
+import { subscriber } from '../../shared/message-service';
+import Scroller from '../scroller/scroller';
 import classNames from 'classnames';
 import Fuse from 'fuse.js';
+import { Row, Col } from "react-bootstrap";
+import "./movies.scss";
+import img from '../../images/placeholder.png';
 
 class Movies extends Component {
 
@@ -16,9 +19,15 @@ class Movies extends Component {
     this.categories = [];
   }
 
-  getImgPath(name) {
-    const ref = storage.ref(`/thumbs/${name}`);
-    return ref.getDownloadURL();
+  async getImgPath(name) {
+    const storageRef = storage.ref(`/thumbs/${name}`);
+   // console.log(ref.getDownloadURL());
+   const url = await storageRef.getDownloadURL().then((url) => {
+      return url;
+    }).catch((err) => {
+      return null;
+    });
+    return url;
   }
 
   async getAllMovies() {
@@ -92,12 +101,13 @@ class Movies extends Component {
       return this.state.movies
         .filter(item => item.category === category)
         .map((item, idx) => {
-          return <li key={idx} className="mdc-card">
+          return <Col key={idx} className="p-2">
+            <div className="mdc-card">
           <div 
               className="mdc-card__media" 
               tabIndex="0"
               >
-              <img src={item.storagePath} 
+              <img src={item.storagePath ? item.storagePath : img} 
                 loading="lazy" 
                 alt={item.name}
               />
@@ -108,12 +118,14 @@ class Movies extends Component {
               </span>
               <span className="mdc-typography mdc-typography--caption">
                 <span className="year">({item.year})</span>
-                <span className="rating"
-                  dangerouslySetInnerHTML={{ __html: this.getLike(item.rating) }}>
+                <span className="rating d-flex align-items-center">
+                  <i className="status-red"></i>
+                  <span>{item.rating}</span>
                 </span>
               </span>
           </div>
-        </li>
+          </div>
+        </Col>
         })
     };
 
@@ -123,16 +135,16 @@ class Movies extends Component {
         const list = moviesList.length ? 
           <div key={item} id={`movies-${item}`}>
             {/* <h3 className="mdc-typography mdc-typography--subtitle2 category-head">{item}</h3> */}
-            <ul className="movie-list">
+            <Row xs={1} sm={2} md={3} lg={4} className="movie-list">
               {moviesList}
-            </ul>
+            </Row>
           </div> : null;
           return list;
       }
     );
 
     return (
-      <Fragment>
+      <div id="container" className="result-container" >
         <div className="movie-wrapper">
           <div className="loader">
             <div role="progressbar" className={loaderClass} aria-label="Progress Bar" 
@@ -155,17 +167,8 @@ class Movies extends Component {
           {categories}
         </div>
         <Scroller scrollList={this.categories} />
-      </Fragment>
+      </div>
     );
-  }
-
-  getLike(rating){
-    const likeClass = 'status-red';
-    const elem = `
-      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="heart" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-heart fa-w-16">
-      <path class=${likeClass} d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"></path></svg>`;
-
-    return rating ? `${elem} ${rating}` : '';
   }
 
   getSearchResults(val){
@@ -191,6 +194,7 @@ class Movies extends Component {
         if(item.rating >= val[0] && item.rating <= val[1]){
           return item;
         }
+        return false;
       });  
     }
     return this.state.initialStore;

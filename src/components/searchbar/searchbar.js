@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
-import { messageService } from './MessageService';
-import { getSpeechRecognition, readOutLoud } from './Speech';
+import { messageService } from '../../shared/message-service';
+import { getSpeechRecognition, readOutLoud } from '../../shared/speech-service';
+import { Navbar } from "react-bootstrap";
+import "./searchbar.scss";
 
 class Searchbar extends Component {
 
@@ -19,7 +21,7 @@ class Searchbar extends Component {
 
   render(){
     return (
-          <div className="search-bar">
+          <Navbar className="search-bar" fixed="top">
             <i className="icons search-cam">
               <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="camera-movie" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="svg-inline--fa fa-camera-movie fa-w-20 fa-3x"><g className="fa-group"><path fill="currentColor" d="M368.2 288H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h48v112.2a47.81 47.81 0 0 0 47.8 47.8h256.4a47.81 47.81 0 0 0 47.8-47.8V335.8a47.81 47.81 0 0 0-47.8-47.8zM128 192a64 64 0 1 0-64-64 64.07 64.07 0 0 0 64 64zm224 0a64 64 0 1 0-64-64 64.07 64.07 0 0 0 64 64z" className="fa-secondary"></path><path fill="currentColor" d="M535.68 260.59L448 321.07V447l87.68 60.4c17 11.68 40.32-.23 40.32-20.64V281.23c0-20.33-23.27-32.33-40.32-20.64zM352 0c-48.57 0-90.31 27.37-112 67.24C218.31 27.37 176.57 0 128 0a128 128 0 0 0 0 256h224a128 128 0 0 0 0-256zM128 192a64 64 0 1 1 64-64 64.07 64.07 0 0 1-64 64zm224 0a64 64 0 1 1 64-64 64.07 64.07 0 0 1-64 64z" className="fa-primary"></path></g></svg>
             </i>
@@ -40,7 +42,7 @@ class Searchbar extends Component {
                 ref={ref => this.deleteSearchRef = ref}>     
               <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="trash-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" className="svg-inline--fa fa-trash-alt fa-w-20 fa-3x"><g className="fa-group"><path fill="currentColor" d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V96H32zm272-288a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0z" className="fa-secondary"></path><path fill="currentColor" d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM128 160a16 16 0 0 0-16 16v224a16 16 0 0 0 32 0V176a16 16 0 0 0-16-16zm96 0a16 16 0 0 0-16 16v224a16 16 0 0 0 32 0V176a16 16 0 0 0-16-16zm96 0a16 16 0 0 0-16 16v224a16 16 0 0 0 32 0V176a16 16 0 0 0-16-16z" className="fa-primary"></path></g></svg>      
             </i>
-        </div>
+        </Navbar>
     );
   }
 

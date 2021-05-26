@@ -1,0 +1,14 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Montserrat Alternates', sans-serif;
+    font-size: 14px;
+    background: var(--color-woodsmoke);
+    --mdc-typography-subtitle2-font-weight: 700;
+    --mdc-typography-font-family: 'Montserrat Alternates', sans-serif;
+}
+
+.admin-page{
+    margin: 100px auto;
+    max-width: 1200px;
+}

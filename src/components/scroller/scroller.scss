@@ -7,8 +7,8 @@
     height: calc(100vh - 100px);
     position: fixed;
     right: 0;
-    top: 65px;
-    background: $woodsmoke;
+    top: 4rem;
+    background: var(--color-woodsmoke);
     align-items: center;
     li{
         flex:1;
@@ -19,7 +19,7 @@
         font-weight: 700;
         cursor: pointer;
         &:hover{
-            color:$trinidad;
+            color:var(--color-trinidad);
             font-size: 20px;
         }
     }

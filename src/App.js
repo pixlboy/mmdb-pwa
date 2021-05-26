@@ -1,27 +1,16 @@
-import React, {Component} from 'react';
-import Searchbar from './Searchbar';
-import Movies from './Movies';
-import Footer from './Footer';
 
-class App extends Component {
+import Admin from "./pages/admin";
+import Home from "./pages/home";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 
-  constructor(){
-    super();
-    this.state = {};
-  }
-
-  render(){
-    return (
-      <div>
-        <Searchbar />
-        <div id='container' className='container'>
-          <Movies />
-        </div>
-        <Footer />
-      </div>
-    );
-  }
-
+export default function App() {
+  return (
+    <>
+        <Switch>
+          <Route path="/admin" component={Admin}></Route>
+          <Route path="/" component={Home}></Route>
+        </Switch>
+    </>
+  );
 }
-
-export default App;

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import "./scroller.scss";
 
 class Scroller extends Component {
 

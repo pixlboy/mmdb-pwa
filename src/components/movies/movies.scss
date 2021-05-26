@@ -1,40 +1,42 @@
-.container{
+.result-container{
     background: rgba(255, 255, 255, .14);
     position: relative;
-    top: 65px;
-    height: calc(100vh - 100px);
+    top: 4rem;
+    height: calc(100vh - 6.5rem);
     overflow-x: auto;
 }
 .movie-wrapper{
     width: calc(100vw - 40px);
-    float:left;
 }
 .movie-list{
     padding: 0 0 0 10px;
-    list-style-type: none;
-    display: grid;
-    grid-gap: 10px;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    width: 100%;
     margin: 5px 0 25px 0;
 }
 
 .status-default{
-    fill: $silver;
+    fill: var(--color-silver);
 }
 
 .status-red{
-    fill: $red;
+    background: url(../../images/heart.svg);
+    height: 14px;
+    width: 14px;
+    display: inline-block;
+    margin-right: 4px;
+    path{
+        fill: var(--color-red);
+    }
 }
 
 .mdc-card{
-    height: 100px;
+    height: 120px;
     display: block!important;
     overflow: hidden;
     .mdc-card__media{
         float: left;
         height: 100%;
         width: 80px;
+        background-image: url('../../images/placeholder.png');
     }
     .card-content{
         float: left;
@@ -63,11 +65,11 @@
 }
 
 .category-head{
-    color: $trinidad;
+    color: var(--color-trinidad);
     margin:0;
     padding: 3px 15px;
     background: #000000c2;
-    box-shadow: 1px 1px 1px 0px $black;
+    box-shadow: 1px 1px 1px 0px var(--color-black);
     font-weight: 700;
     width: 80px;
     border-top-right-radius: 20px;
@@ -76,7 +78,7 @@
 }
   
 .list-length{
-    color: $white;
+    color: var(--color-white);
     margin: 0 0 0 12px;
     display: inline-block;
 }

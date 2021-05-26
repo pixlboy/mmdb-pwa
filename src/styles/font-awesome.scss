@@ -129,11 +129,11 @@
   }
   
   .fa-layers-counter {
-    background-color: $red-orange;
+    background-color: var(--color-red-orange);
     border-radius: 1em;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
-    color: $white;
+    color: var(--color-white);
     height: 1.5em;
     line-height: 1;
     max-width: 5em;
@@ -266,7 +266,7 @@
   }
   
   .fa-border {
-    border: solid 0.08em $gallery;
+    border: solid 0.08em var(--color-gallery);
     border-radius: 0.1em;
     padding: 0.2em 0.25em 0.15em;
   }
@@ -379,7 +379,7 @@
   }
   
   .fa-inverse {
-    color: $white;
+    color: var(--color-white);
   }
   
   .sr-only {
@@ -403,11 +403,11 @@
   }
   
   .svg-inline--fa .fa-primary {
-    fill: $white;
+    fill: var(--color-white);
   }
   
   .svg-inline--fa .fa-secondary {
-    fill: $trinidad;
+    fill: var(--color-trinidad);
   }
   
   .svg-inline--fa.fa-swap-opacity .fa-primary {
@@ -424,5 +424,5 @@
   }
   
   .fad.fa-inverse {
-    color: $white;
+    color: var(--color-white);
   }

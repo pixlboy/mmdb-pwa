@@ -1,0 +1,29 @@
+.footer{
+    width: 100%;
+    height: 2.5rem;
+    background: var(--color-woodsmoke);
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    box-shadow: 0px 1px 4px 1px var(--color-black);
+    .icons{
+        transition: all 300ms;
+        flex: 1;
+        cursor: pointer;
+        svg{
+            font-size: 1.5rem;
+        }
+        &:hover{
+            transform: scale(1.3);
+            filter: grayscale(0) !important;
+        }
+        &.faded{
+            filter: grayscale(1);
+        }
+    }
+    .icon-text{
+        color: var(--color-trinidad);
+        font-weight: 700;
+        font-size: 18px;
+    }
+}

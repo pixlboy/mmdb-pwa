@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import { messageService } from './MessageService';
+import { messageService } from '../../shared/message-service';
 import classNames from 'classnames';
+import "./footer.scss";
 
 class Footer extends Component {
 
@@ -34,7 +35,7 @@ class Footer extends Component {
   render(){
       
     return (
-          <div className="footer">
+          <div className="footer align-items-center d-flex">
             <i className={this.getClassNames('BAD')} onClick={(e) => this.selectRating(e, 'BAD')}>
                 <svg aria-hidden="true" focusable="false" data-prefix="fad" data-icon="frown" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" className="icon-bad svg-inline--fa fa-frown fa-w-16"><g className="fa-group"><path fill="currentColor" d="M248,8C111,8,0,119,0,256S111,504,248,504,496,393,496,256,385,8,248,8Zm80,168a32,32,0,1,1-32,32A32,32,0,0,1,328,176Zm-160,0a32,32,0,1,1-32,32A32,32,0,0,1,168,176ZM338.2,394.2a117.5,117.5,0,0,0-180.4,0c-13.5,16.3-38.1-4.2-24.6-20.5a149.34,149.34,0,0,1,229.5.1C376.3,390,351.7,410.5,338.2,394.2Z" className="fa-secondary"></path><path fill="currentColor" d="M168,176a32,32,0,1,0,32,32A32,32,0,0,0,168,176Zm160,0a32,32,0,1,0,32,32A32,32,0,0,0,328,176Z" className="fa-primary"></path></g></svg>
             </i>
