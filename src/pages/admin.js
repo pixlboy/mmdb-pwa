@@ -1,51 +1,84 @@
-import { Card, ProgressBar, Row, Col, Form, Button } from "react-bootstrap";
+import {
+  Card,
+  ProgressBar,
+  Row,
+  Col,
+  Form,
+  Button,
+  Image,
+} from "react-bootstrap";
 import { UserContext } from "../shared/user-provider";
 import { Link } from "react-router-dom";
 import { signInWithGoogle, logOut } from "../firebase/auth";
-import { firestore } from "../firebase/connect";
-import React, { useState, useEffect, useContext } from "react";
-
-const useFormField = (initialValue = "") => {
-  const [value, setValue] = React.useState(initialValue);
-  const onChange = React.useCallback((e) => setValue(e.target.value), []);
-  return { value, onChange };
-};
+import { firestore, storage } from "../firebase/connect";
+import React, { useState, useEffect, useContext, useRef } from "react";
 
 export default function Admin() {
   const { user } = useContext(UserContext);
   const [isPermission, setPermission] = useState(null);
-  const nameField = useFormField();
-  const ratingField = useFormField();
-  const yearField = useFormField();
+  const nameRef = useRef("");
+  const ratingRef = useRef("");
+  const yearRef = useRef("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
   useEffect(() => {
-    if (user?.email) {
-      const dataRef = firestore.collection("users");
-      dataRef
-        .where("email", "==", user.email)
+    if (user?.uid) {
+      firestore
+        .collection("users")
+        .doc(user.uid)
         .get()
-        .then((data) => {
-          data.forEach((doc) => {
-            setPermission(true);
-          });
+        .then((doc) => {
+          setPermission(doc.data().isAllowedAccess);
         });
     }
   }, [user]);
 
-  const addItem = (e) => {
+  const addItem = () => {
+    const promise1 = uploadDocument();
+    const promise2 = upLoadFile();
+    Promise.all([promise1, promise2]).then(values => {
+      resetForm();
+    })
+  };
+
+  const resetForm = () => {
+    nameRef.current.value = "";
+    ratingRef.current.value = "";
+    yearRef.current.value = "";
+    setSelectedFile(null);
+  };
+
+  const fileChangeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const uploadDocument = () => {
     const dataRef = firestore.collection("movies");
-    dataRef
+    return dataRef
       .add({
-        name: nameField.value,
-        path: `${nameField.value} (${yearField.value}).jpg`,
-        rating: Number(ratingField.value),
-        year: Number(yearField.value),
+        name: nameRef.current.value,
+        path: selectedFile.name,
+        rating: Number(ratingRef.current.value),
+        year: Number(yearRef.current.value),
       })
-      .then((docRef) => {
-        console.log("Success", docRef);
+      .then((msg) => {
+        console.log("Document upload successful");
       })
       .catch((error) => {
-        console.log("Error", error);
+        console.log("Document upload failed", error);
+      });
+  };
+
+  const upLoadFile = () => {
+    const storageRef = storage.ref();
+    const imageRef = storageRef.child(`/thumbs/${selectedFile.name}`);
+    return imageRef
+      .put(selectedFile)
+      .then((msg) => {
+        console.log("File upload successful");
+      })
+      .catch((error) => {
+        console.log('File upload failed', error);
       });
   };
 
@@ -56,17 +89,24 @@ export default function Admin() {
         <Form.Group as={Row}>
           <Col className="pb-3">
             <Form.Label className="mt-2">Name</Form.Label>
-            <Form.Control type="text" {...nameField} />
+            <Form.Control type="text" ref={nameRef} />
             <Form.Label className="mt-3">Rating</Form.Label>
-            <Form.Control type="text" {...ratingField} />
+            <Form.Control type="text" ref={ratingRef} />
             <Form.Label className="mt-3">Year</Form.Label>
-            <Form.Control type="text" {...yearField} />
+            <Form.Control type="text" ref={yearRef} />
+            <Form.Label className="mt-3">File</Form.Label>
+            <Form.Control type="file" onChange={fileChangeHandler} />
           </Col>
         </Form.Group>
         <Button
           variant="success"
           className="float-right"
-          disabled={!nameField.value || !ratingField.value || !yearField.value}
+          disabled={
+            !nameRef.current.value ||
+            !ratingRef.current.value ||
+            !yearRef.current.value ||
+            !selectedFile
+          }
           onClick={() => addItem()}
         >
           Save
@@ -78,9 +118,9 @@ export default function Admin() {
   const cardBody = () => {
     if (user === null) {
       return <ProgressBar animated now={100} />;
-    } else if (user?.email && isPermission) {
+    } else if (user?.uid && isPermission) {
       return formBody();
-    } else if (user?.email && !isPermission) {
+    } else if (user?.uid && !isPermission) {
       return <span>Sorry, you are not an authorised user.</span>;
     } else {
       return (
@@ -99,11 +139,17 @@ export default function Admin() {
     <div className="admin-page">
       <Card>
         <Card.Header>
-          {user?.displayName && (
-            <div className="d-flex justify-content-between">
-              <span>{user?.displayName}</span>
-              <span>{user?.email}</span>
-              <Link to="/admin" onClick={logOut}>
+          {user?.uid && (
+            <div className="d-flex align-items-center">
+              <Image
+                src={user?.photoURL}
+                roundedCircle
+                width="36"
+                height="36"
+                alt="user image"
+              />
+              <span className="ml-3">{user.displayName}</span>
+              <Link to="/admin" className="ml-auto" onClick={logOut}>
                 Logout
               </Link>
             </div>

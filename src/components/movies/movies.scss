@@ -30,13 +30,17 @@
 
 .mdc-card{
     height: 120px;
-    display: block!important;
+    display: block !important;
     overflow: hidden;
     .mdc-card__media{
         float: left;
         height: 100%;
         width: 80px;
         background-image: url('../../images/placeholder.png');
+        img{
+            height: 100%;
+            width: 100%;
+        }
     }
     .card-content{
         float: left;
