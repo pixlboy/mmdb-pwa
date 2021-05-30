@@ -37,10 +37,6 @@ export default function Movies() {
     collection.get().then((data) => {
       data.forEach((doc) => {
         const item = addCategory(doc.data());
-        // getImgPath(doc.data().path).then((url) => {
-        //   item.storagePath = url;
-        //   items.push(item);
-        // });
         items.push(item);
       });
       correctCategoryOrder();
@@ -50,18 +46,6 @@ export default function Movies() {
       setIsLoader(false);
     });
   }, []);
-
-  // function getImgPath(name) {
-  //   const storageRef = storage.ref(`/thumbs/${name}`);
-  //   return storageRef
-  //     .getDownloadURL()
-  //     .then((url) => {
-  //       return url;
-  //     })
-  //     .catch((err) => {
-  //       return null;
-  //     });
-  // }
 
   const buildUniqueCategories = (category) => {
     if (categories.indexOf(category) === -1) {
@@ -118,7 +102,7 @@ export default function Movies() {
       .filter((item) => item.category === category)
       .map((item, idx) => {
         return (
-          <Col key={idx} className="p-2">
+          <Col key={idx} className="p-1">
             <div className="mdc-card">
               <div className="mdc-card__media" tabIndex="0">
                 <img
@@ -149,11 +133,9 @@ export default function Movies() {
     return categoryList.map((item) => {
       const moviesList = getMoviesInCategory(item);
       const list = moviesList.length ? (
-        <div key={item} id={`movies-${item}`}>
-          <Row xs={1} sm={2} md={3} lg={4} className="movie-list">
-            {moviesList}
-          </Row>
-        </div>
+        <Row xs={1} sm={2} md={3} lg={4} className="movie-list" key={item} id={`movies-${item}`}>
+          {moviesList}
+        </Row>
       ) : null;
       return list;
     });

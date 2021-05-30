@@ -14,10 +14,11 @@
         flex:1;
         align-items: center;
         display: flex;
-        color: #a932008f;
+        color: var(--color-scroll-item);
         font-size: 12px;
         font-weight: 700;
         cursor: pointer;
+        user-select: none;
         &:hover{
             color:var(--color-trinidad);
             font-size: 20px;

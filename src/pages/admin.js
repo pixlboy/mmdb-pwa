@@ -33,12 +33,11 @@ export default function Admin() {
     }
   }, [user]);
 
-  const addItem = () => {
-    const promise1 = uploadDocument();
-    const promise2 = upLoadFile();
-    Promise.all([promise1, promise2]).then(values => {
-      resetForm();
-    })
+  async function addItem(){
+    const ref = await upLoadFile();
+    const path = await getImgPath(ref);
+    await uploadDocument(path);
+    resetForm();
   };
 
   const resetForm = () => {
@@ -52,7 +51,18 @@ export default function Admin() {
     setSelectedFile(event.target.files[0]);
   };
 
-  const uploadDocument = () => {
+  const getImgPath = (storageRef) => {
+    return storageRef
+      .getDownloadURL()
+      .then((url) => {
+        return url;
+      })
+      .catch((err) => {
+        return null;
+      });
+  }
+
+  const uploadDocument = (path) => {
     const dataRef = firestore.collection("movies");
     return dataRef
       .add({
@@ -60,9 +70,11 @@ export default function Admin() {
         path: selectedFile.name,
         rating: Number(ratingRef.current.value),
         year: Number(yearRef.current.value),
+        storagePath : path
       })
-      .then((msg) => {
+      .then((snapshot) => {
         console.log("Document upload successful");
+        return snapshot;
       })
       .catch((error) => {
         console.log("Document upload failed", error);
@@ -74,8 +86,9 @@ export default function Admin() {
     const imageRef = storageRef.child(`/thumbs/${selectedFile.name}`);
     return imageRef
       .put(selectedFile)
-      .then((msg) => {
+      .then((snapshot) => {
         console.log("File upload successful");
+        return snapshot.ref;
       })
       .catch((error) => {
         console.log('File upload failed', error);
